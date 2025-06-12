@@ -18,12 +18,12 @@ export class BookingService {
             throw new Error("Propriedade não encontrada.");
         }
         
-        const guest = await this.userService.findUserById(dto.userId);
+        const guest = await this.userService.findUserById(dto.guestId);
         if (!guest) {
             throw new Error("Usuário não encontrado.");
         }
         
-        const dateRange = new DateRange(dto.startTime, dto.endTime); //altamente acoplado precisa de mock
+        const dateRange = new DateRange(dto.startDate, dto.endDate); //altamente acoplado precisa de mock
         
         const booking = new Booking(
             uuidv4(),
@@ -39,6 +39,11 @@ export class BookingService {
 
     async cancelBooking(bookingId: string): Promise<void> {
         const booking = await this.bookingRepository.findById(bookingId);
+
+        if (!booking) {
+            throw new Error("Reserva não encontrada.");
+        }
+        
         booking?.cancel(new Date());
         await this.bookingRepository.save(booking!);
     }

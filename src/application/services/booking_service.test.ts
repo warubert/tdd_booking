@@ -42,10 +42,10 @@ describe("BookingService", () => {
         mockUserService.findUserById.mockResolvedValue(mockUser);
 
         const bookingDto: CreateBookingDto = {
-            userId: "1",
+            guestId: "1",
             propertyId: "1",
-            startTime: new Date("2025-12-20"),
-            endTime: new Date("2025-12-25"),
+            startDate: new Date("2025-12-20"),
+            endDate: new Date("2025-12-25"),
             guestCount: 2
         }
 
@@ -64,10 +64,10 @@ describe("BookingService", () => {
         mockPropertyService.findPropertyById.mockResolvedValue(null);
 
         const bookingDto: CreateBookingDto = {
-            userId: "1",
+            guestId: "1",
             propertyId: "1",
-            startTime: new Date("2025-12-20"),
-            endTime: new Date("2025-12-25"),
+            startDate: new Date("2025-12-20"),
+            endDate: new Date("2025-12-25"),
             guestCount: 2
         }
 
@@ -83,10 +83,10 @@ describe("BookingService", () => {
         mockUserService.findUserById.mockResolvedValue(null);
 
         const bookingDto: CreateBookingDto = {
-            userId: "1",
+            guestId: "1",
             propertyId: "1",
-            startTime: new Date("2025-12-20"),
-            endTime: new Date("2025-12-25"),
+            startDate: new Date("2025-12-20"),
+            endDate: new Date("2025-12-25"),
             guestCount: 2
         }
 
@@ -110,10 +110,10 @@ describe("BookingService", () => {
         mockUserService.findUserById.mockResolvedValue(mockUser);
 
         const bookingDto: CreateBookingDto = {
-            userId: "1",
+            guestId: "1",
             propertyId: "1",
-            startTime: new Date("2025-12-20"),
-            endTime: new Date("2025-12-25"),
+            startDate: new Date("2025-12-20"),
+            endDate: new Date("2025-12-25"),
             guestCount: 2
         }
 
@@ -144,10 +144,10 @@ describe("BookingService", () => {
         mockUserService.findUserById.mockResolvedValue(mockUser);
 
         const bookingDto: CreateBookingDto = {
-            userId: "1",
+            guestId: "1",
             propertyId: "1",
-            startTime: new Date("2025-12-20"),
-            endTime: new Date("2025-12-25"),
+            startDate: new Date("2025-12-20"),
+            endDate: new Date("2025-12-25"),
             guestCount: 2
         }
 
@@ -159,4 +159,11 @@ describe("BookingService", () => {
         expect(spyFindById).toHaveBeenCalledWith(booking.getId());
         spyFindById.mockRestore();
     })
+
+    it("Deve lançar erro ao tentar cancelar reserva não encontrada", async () => {
+        const bookingId = "non-existing-id";
+
+        await expect(bookingService.cancelBooking(bookingId)).rejects.toThrow("Reserva não encontrada.");
+    });
+    
 });
